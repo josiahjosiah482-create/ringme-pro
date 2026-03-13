@@ -82,12 +82,16 @@
 - [x] FIX 20: SETUP.md production deployment guide (200+ lines)
 
 ## Infrastructure
-- [ ] Set up Twilio credentials via Secrets panel
+- [x] Set up Twilio credentials via Secrets panel
 - [ ] Set up RevenueCat credentials via Secrets panel
 - [ ] Run database migration (db:push)
 - [ ] Verify QR code works for Expo Go preview
 
 ## Follow-up Features
-- [ ] Set up Twilio credentials (TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER, API_BASE_URL) — requires user's Twilio account
+- [x] Set up Twilio credentials (TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER, API_BASE_URL)
 - [x] Run database migration (db:push)
 - [x] AI-powered smart reply suggestions in chat screen (3 chips above keyboard) — already implemented
+- [ ] Set up Twilio credentials via Secrets panel
+- [x] Add message search screen (full-text search across conversations)
+- [x] Publish prep (checkpoint for Publish button)
+- [x] Generate QR code for Expo Go preview

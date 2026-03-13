@@ -112,6 +112,10 @@ export const appRouter = router({
       .input(z.object({ conversationId: z.number(), limit: z.number().default(50) }))
       .query(({ input }) => db.getConversationMessages(input.conversationId, input.limit)),
 
+    search: protectedProcedure
+      .input(z.object({ query: z.string().min(1).max(200), limit: z.number().default(50) }))
+      .query(({ ctx, input }) => db.searchMessages(ctx.user.id, input.query, input.limit)),
+
     send: protectedProcedure
       .input(
         z.object({

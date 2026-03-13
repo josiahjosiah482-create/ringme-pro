@@ -307,6 +307,12 @@ export default function MessagesTab() {
         <View style={{ flexDirection: "row", gap: 8 }}>
           <Pressable
             style={({ pressed }) => [styles.groupBtn, pressed && { opacity: 0.8 }]}
+            onPress={() => router.push("/search" as never)}
+          >
+            <Text style={styles.groupBtnText}>🔍</Text>
+          </Pressable>
+          <Pressable
+            style={({ pressed }) => [styles.groupBtn, pressed && { opacity: 0.8 }]}
             onPress={() => router.push("/chat/group-new" as never)}
           >
             <Text style={styles.groupBtnText}>👥</Text>

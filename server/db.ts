@@ -522,3 +522,44 @@ export async function isDbHealthy(): Promise<boolean> { const db = await getDb()
     return false;
   }
 }
+
+// ─── Full-Text Message Search ──────────────────────────────────────────────────
+export async function searchMessages(userId: number, query: string, limit = 50) {
+  const db = await getDb();
+  if (!db) return [];
+  // Get all user conversations first
+  const userConvos = await db.select().from(conversations).where(eq(conversations.userId, userId));
+  if (userConvos.length === 0) return [];
+  const convoIds = userConvos.map((c) => c.id);
+  const convoMap = new Map(userConvos.map((c) => [c.id, c]));
+
+  // Search messages across all user conversations
+  const allMessages = [];
+  for (const convoId of convoIds) {
+    const msgs = await db.select().from(messages)
+      .where(eq(messages.conversationId, convoId))
+      .orderBy(desc(messages.createdAt))
+      .limit(200);
+    allMessages.push(...msgs);
+  }
+
+  // Filter by query (case-insensitive)
+  const lowerQuery = query.toLowerCase();
+  const matched = allMessages
+    .filter((m) => m.text.toLowerCase().includes(lowerQuery))
+    .slice(0, limit)
+    .map((m) => {
+      const convo = convoMap.get(m.conversationId);
+      return {
+        messageId: m.id,
+        conversationId: m.conversationId,
+        text: m.text,
+        isMe: m.isMe,
+        createdAt: m.createdAt,
+        contactName: convo?.contactName ?? convo?.contactNumber ?? "Unknown",
+        contactNumber: convo?.contactNumber ?? "",
+      };
+    });
+
+  return matched;
+}
