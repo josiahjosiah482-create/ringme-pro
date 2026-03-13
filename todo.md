@@ -86,3 +86,8 @@
 - [ ] Set up RevenueCat credentials via Secrets panel
 - [ ] Run database migration (db:push)
 - [ ] Verify QR code works for Expo Go preview
+
+## Follow-up Features
+- [ ] Set up Twilio credentials (TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER, API_BASE_URL) — requires user's Twilio account
+- [x] Run database migration (db:push)
+- [x] AI-powered smart reply suggestions in chat screen (3 chips above keyboard) — already implemented
