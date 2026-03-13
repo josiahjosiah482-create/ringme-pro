@@ -6,6 +6,10 @@ import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { registerOAuthRoutes } from "./oauth";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
+import { registerWebhookRoutes } from "../webhooks";
+import { registerSSERoutes } from "../sse";
+import { isDbHealthy } from "../db";
+import { getTwilioClient } from "../twilio";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise((resolve) => {
@@ -55,9 +59,13 @@ async function startServer() {
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
   registerOAuthRoutes(app);
+  registerWebhookRoutes(app);
+  registerSSERoutes(app);
 
-  app.get("/api/health", (_req, res) => {
-    res.json({ ok: true, timestamp: Date.now() });
+  app.get("/api/health", async (_req, res) => {
+    const dbOk = await isDbHealthy().catch(() => false);
+    const twilioOk = !!getTwilioClient();
+    res.json({ ok: true, db: dbOk, twilio: twilioOk, timestamp: Date.now() });
   });
 
   app.use(

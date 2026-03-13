@@ -32,7 +32,7 @@ const env = {
   appSlug: "ringme-pro",
   // S3 URL of the app logo - set this to the URL returned by generate_image when creating custom logo
   // Leave empty to use the default icon from assets/images/icon.png
-  logoUrl: "",
+  logoUrl: "https://d2xsxph8kpxj0f.cloudfront.net/310519663434353969/mgg3rvDXABre3wAnTakMgM/icon-faU3sKE6stuVHeaW48gjM7.png",
   scheme: schemeFromBundleId,
   iosBundleId: bundleId,
   androidPackage: bundleId,
@@ -56,7 +56,7 @@ const config: ExpoConfig = {
   },
   android: {
     adaptiveIcon: {
-      backgroundColor: "#E6F4FE",
+      backgroundColor: "#0D0520",
       foregroundImage: "./assets/images/android-icon-foreground.png",
       backgroundImage: "./assets/images/android-icon-background.png",
       monochromeImage: "./assets/images/android-icon-monochrome.png",
@@ -87,6 +87,20 @@ const config: ExpoConfig = {
   plugins: [
     "expo-router",
     [
+      "expo-contacts",
+      {
+        contactsPermission:
+          "Allow RingMe Pro to access your contacts to import them into the app.",
+      },
+    ],
+    [
+      "expo-image-picker",
+      {
+        photosPermission: "Allow RingMe Pro to access your photos for MMS.",
+        cameraPermission: "Allow RingMe Pro to access your camera.",
+      },
+    ],
+    [
       "expo-audio",
       {
         microphonePermission: "Allow $(PRODUCT_NAME) to access your microphone.",
@@ -105,9 +119,9 @@ const config: ExpoConfig = {
         image: "./assets/images/splash-icon.png",
         imageWidth: 200,
         resizeMode: "contain",
-        backgroundColor: "#ffffff",
+        backgroundColor: "#0D0520",
         dark: {
-          backgroundColor: "#000000",
+          backgroundColor: "#0D0520",
         },
       },
     ],
@@ -124,6 +138,9 @@ const config: ExpoConfig = {
   experiments: {
     typedRoutes: true,
     reactCompiler: true,
+  },
+  extra: {
+    logoUrl: env.logoUrl,
   },
 };
 
